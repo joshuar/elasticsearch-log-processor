@@ -1,0 +1,2 @@
+ES_NODE \[%{HOSTNAME:[node][name]}\]\[%{WORD:[node][id]}\]\[%{HOSTNAME}\]\[inet\[\/%{IP:[node][ip]}:%{POSINT:[node][port]}\]\]{%{DATA:[node][roles]}}
+SHARD_TYPE (?<shard_type>P|R)

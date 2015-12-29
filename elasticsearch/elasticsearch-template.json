@@ -1,0 +1,135 @@
+{
+    "template" : "elasticsearch-logs-*",
+    "settings" : {
+	"index.refresh_interval" : "5s",
+	"analysis": {
+	    "filter": {
+		"trace_filter": {
+		    "type": "pattern_capture",
+		    "preserve_original": 1,
+		    "patterns": [
+			"(\\p{Ll}+|\\p{Lu}\\p{Ll}+|\\p{Lu}+)",
+			"(\\d+)"
+		    ]
+		}
+	    },
+	    "analyzer": {
+		"component_analyzer": {
+		    "tokenizer": "pattern"
+		},
+		"trace_analyzer": {
+		    "tokenizer": "pattern",
+		    "filter": [
+			"trace_filter",
+			"lowercase"
+		    ]
+		}
+	    }
+	}
+    },
+    "mappings" : {
+	"_default_" : {
+	    "_all" : {"enabled" : true, "omit_norms" : true},
+	    "dynamic_templates" : [ {
+		"message_field" : {
+		    "match" : "message",
+		    "match_mapping_type" : "string",
+		    "mapping" : {
+			"type" : "string", "index" : "analyzed", "omit_norms" : true,
+			"fielddata" : { "format" : "disabled" }
+		    }
+		}
+	    }, {
+		"string_fields" : {
+		    "match" : "*",
+		    "match_mapping_type" : "string",
+		    "mapping" : {
+			"type" : "string", "index" : "analyzed", "omit_norms" : true,
+			"fielddata" : { "format" : "disabled" },
+			"fields" : {
+			    "raw" : {"type": "string", "index" : "not_analyzed", "doc_values" : true, "ignore_above" : 256}
+			}
+		    }
+		}
+	    },  {
+		"component" : {
+		    "match" : "component",
+		    "mapping" : {
+			"type" : "string", "index" : "analyzed", "analyzer": "component_analyzer", "omit_norms" : true,
+			"fielddata" : { "format" : "disabled" },
+			"fields" : {
+			    "raw" : {"type": "string", "index" : "not_analyzed", "doc_values" : true, "ignore_above" : 256}
+			}
+		    }
+		}
+	    }, {
+		"exception" : {
+		    "match" : "exception",
+		    "mapping" : {
+			"type" : "string", "index": "analyzed", "analyzer": "trace_analyzer", "omit_norms": true, "ignore_above" : 2048,
+			"fielddata" : { "format" : "disabled" },
+			"fields" : {
+			    "raw" : {"type": "string", "index" : "not_analyzed", "doc_values" : true, "ignore_above" : 2048 }
+			}
+		    }
+		}
+	    }, {
+		"float_fields" : {
+		    "match" : "*",
+		    "match_mapping_type" : "float",
+		    "mapping" : { "type" : "float", "doc_values" : true }
+		}
+	    }, {
+		"double_fields" : {
+		    "match" : "*",
+		    "match_mapping_type" : "double",
+		    "mapping" : { "type" : "double", "doc_values" : true }
+		}
+	    }, {
+		"byte_fields" : {
+		    "match" : "*",
+		    "match_mapping_type" : "byte",
+		    "mapping" : { "type" : "byte", "doc_values" : true }
+		}
+	    }, {
+		"short_fields" : {
+		    "match" : "*",
+		    "match_mapping_type" : "short",
+		    "mapping" : { "type" : "short", "doc_values" : true }
+		}
+	    }, {
+		"integer_fields" : {
+		    "match" : "*",
+		    "match_mapping_type" : "integer",
+		    "mapping" : { "type" : "integer", "doc_values" : true }
+		}
+	    }, {
+		"long_fields" : {
+		    "match" : "*",
+		    "match_mapping_type" : "long",
+		    "mapping" : { "type" : "long", "doc_values" : true }
+		}
+	    }, {
+		"date_fields" : {
+		    "match" : "*",
+		    "match_mapping_type" : "date",
+		    "mapping" : { "type" : "date", "doc_values" : true }
+		}
+	    } ],
+	    "properties" : {
+		"@timestamp": { "type": "date", "doc_values" : true },
+		"@version": { "type": "string", "index": "not_analyzed", "doc_values" : true },
+		"level": { "type": "string", "index": "not_analyzed", "doc_values" : true },
+		"shard_state": { "type": "string", "index": "not_analyzed", "doc_values" : true },
+		"shard_type": { "type": "string", "index": "not_analyzed", "doc_values" : true },
+		"index_id": { "type": "string", "index": "not_analyzed", "doc_values" : true },
+		"document_id": { "type": "string", "index": "not_analyzed", "doc_values" : true },
+		"node_id": { "type": "string", "index": "not_analyzed", "doc_values" : true },
+		"shard_id": { "type": "integer", "doc_values" : true },
+		"bulk_action": { "type": "string", "index": "not_analyzed", "doc_values" : true },
+		"bulk_request": { "type": "string", "index": "no" },
+		"index_request": { "type": "string", "index": "no" }
+	    }
+	}
+    }
+}
