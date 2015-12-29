@@ -3,7 +3,7 @@
 This is a way to visualise Elasticsearch logs (not slow logs) in
 Kibana.  See the following screenshot for what it looks like:
 
-[[Dashboard-Screenshot.png|alt=Dashboard]]
+![Dashboard Example](Dashboard-Screenshot.png)
 
 ## Installation
 
@@ -57,8 +57,7 @@ new fields or import/export a new dashboard/visualisation from/to Kibana.
 
 ### Elasticsearch
 
-The mapping file is located at
-[[elasticsearch/elasticsearch-template.json]].  After editing, you'll
+The mapping file is located in the [elasticsearch](elasticsearch) directory in the file `elasticsearch-template.json`.  After editing, you'll
 need to update the mapping in your Elasticsearch cluster with the curl
 command above and reindex any log files.
 
@@ -86,4 +85,4 @@ edit these files.
 ### Kibana
 
 The dashboards and visualisations shown in the screenshot are in the
-[[kibana/export.json]] file.
+[kibana](kibana) directory in the `export.json` file.
