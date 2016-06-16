@@ -36,10 +36,12 @@ Import the Kibana dashboard/visualisations in `kibana/export.json`
 Adjust the *output* in the logstash configuration file
 `logstash/90-output-elasticsearch.conf`  appropriate for
 your Elasticsearch server.  **DO NOT CHANGE THE INDEX NAME**.
-Then simply `cat` your log files to logstash using this configuration file:
+Then simply pipe your log files to logstash using this configuration file:
 
 ```
-cat /path/to/elasticsearch.log | /path/to/bin/logstash --config logstash
+/path/to/bin/logstash --config logstash < /path/to/elasticsearch.log
+# or
+cat /path/to/logs/*.log | /path/to/bin/logstash --config logstash
 ```
 
 ## Limitations
