@@ -1,0 +1,25 @@
+[
+  {
+    "_id": "Elasticsearch-Logs",
+    "_type": "search",
+    "_source": {
+      "title": "Elasticsearch Logs",
+      "description": "",
+      "hits": 0,
+      "columns": [
+        "node_name",
+        "level",
+        "component",
+        "message"
+      ],
+      "sort": [
+        "@timestamp",
+        "desc"
+      ],
+      "version": 1,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"index\":\"elasticsearch-logs-*\",\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}},\"filter\":[],\"highlight\":{\"pre_tags\":[\"@kibana-highlighted-field@\"],\"post_tags\":[\"@/kibana-highlighted-field@\"],\"fields\":{\"*\":{}},\"require_field_match\":false,\"fragment_size\":2147483647}}"
+      }
+    }
+  }
+]

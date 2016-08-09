@@ -1,0 +1,19 @@
+[
+  {
+    "_id": "Elasticsearch-Logs",
+    "_type": "dashboard",
+    "_source": {
+      "title": "Elasticsearch Logs",
+      "hits": 0,
+      "description": "",
+      "panelsJSON": "[{\"col\":1,\"columns\":[\"component\",\"level\",\"message\"],\"id\":\"Elasticsearch-Logs\",\"panelIndex\":1,\"row\":8,\"size_x\":12,\"size_y\":4,\"sort\":[\"@timestamp\",\"asc\"],\"type\":\"search\"},{\"col\":1,\"id\":\"Elasticsearch-Message-Count\",\"panelIndex\":2,\"row\":1,\"size_x\":12,\"size_y\":3,\"type\":\"visualization\"},{\"col\":4,\"id\":\"Elasticsearch-Components-and-Log-Levels\",\"panelIndex\":3,\"row\":4,\"size_x\":3,\"size_y\":4,\"type\":\"visualization\"},{\"col\":10,\"id\":\"Nodes\",\"panelIndex\":4,\"row\":4,\"size_x\":3,\"size_y\":4,\"type\":\"visualization\"},{\"col\":1,\"id\":\"Elasticsearch-Logs:-Message-Tags\",\"panelIndex\":5,\"row\":4,\"size_x\":3,\"size_y\":4,\"type\":\"visualization\"},{\"id\":\"Elasticsearch-Logs:-Indices-and-Shards\",\"type\":\"visualization\",\"panelIndex\":6,\"size_x\":3,\"size_y\":4,\"col\":7,\"row\":4}]",
+      "optionsJSON": "{\"darkTheme\":false}",
+      "uiStateJSON": "{\"P-2\":{\"vis\":{\"legendOpen\":false}}}",
+      "version": 1,
+      "timeRestore": false,
+      "kibanaSavedObjectMeta": {
+        "searchSourceJSON": "{\"filter\":[{\"query\":{\"query_string\":{\"analyze_wildcard\":true,\"query\":\"*\"}}}]}"
+      }
+    }
+  }
+]
