@@ -33,22 +33,42 @@ Import the Kibana dashboard/visualisations in `kibana/export.json`
 
 ## Usage
 
-Adjust the *output* in the logstash configuration file
-`logstash/90-output-elasticsearch.conf`  appropriate for
-your Elasticsearch server.  **DO NOT CHANGE THE INDEX NAME**.
-Then simply pipe your log files to logstash using this configuration file:
+### Helper Script
+
+There is a helper script called `run.sh` in the root of this repo that
+can assist with performing one-off indexing of logs via Logstash and
+Elasticsearch.
+
+Usage is simple:
+
+```sh
+./run.sh -h https://myes.com:9200 -u user -p password path/to/logs
+```
+
+Where:
+
+* `-h` is the URL (including the port) for your Elasticsearch endpoint
+* `-u` and `-p` are the username and password to access your
+  Elasticsearch endpoint (optional).
+
+The remaining command-line arguments are treated as log files.
+Standard shell wildcard/globbing applies.
+
+If you add a `-t` option the script will load the Elasticsearch
+template shipped in this repo into Elasticsearch for you before
+performing any indexing with Logstash.
+
+### Manual Indexing
+
+Create an *output* configuration in the `logsash/conf.d` directory
+appropriate for your Elasticsearch server. Ensure the index pattern is
+`elasticsearch-logs-5-%{YYYY.MM.DD}`. Then simply pipe your log files to logstash using this configuration file:
 
 ```
-/path/to/bin/logstash --config logstash < /path/to/elasticsearch.log
+/path/to/bin/logstash --config logstash/conf.d < /path/to/elasticsearch.log
 # or
 cat /path/to/logs/*.log | /path/to/bin/logstash --config logstash
 ```
-
-## Limitations
-
-* Log lines that have unexpected newlines or other control characters
-  at random places will not be processed correctly.  Look for
-  documents tagged `_grokparsefailure` to see these.
 
 ## Contributing
 
@@ -66,7 +86,7 @@ command above and reindex any log files.
 ### Logstash
 
 All of the filters for a base component of logging in Elasticsearch
-go into a seperate `logstash/50-filter-<component>.conf` Logstash configuration file. So
+go into a seperate `logstash/conf.d/50-filter-<component>.conf` Logstash configuration file. So
 for example, filters for **index.shard** and **index.fielddata** log
 messages go into a `50-filter-index.conf` Logstash configuration file.
 
@@ -79,10 +99,6 @@ log level and component.
 * `45-filter-exceptions.conf`: parses multiline java stack traces.
 * `90-output-dots.conf`: outputs a `.` to the console for each log
 line processed.
-* `90-output-elasticsearch.conf`: output to Elasticsearch.
-
-Excluding `90-output-elasticsearch.conf`, there should be no need to
-edit these files.
 
 ### Kibana
 

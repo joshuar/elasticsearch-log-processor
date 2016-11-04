@@ -1,0 +1,94 @@
+{
+    "template" : "elasticsearch-logs-5-*",
+    "settings" : {
+		"index.refresh_interval" : "5s",
+		"analysis": {
+			"filter": {
+				"trace_filter": {
+					"type": "pattern_capture",
+					"preserve_original": 1,
+					"patterns": [
+						"(\\p{Ll}+|\\p{Lu}\\p{Ll}+|\\p{Lu}+)",
+						"(\\d+)"
+					]
+				}
+			},
+			"analyzer": {
+				"component_analyzer": {
+					"tokenizer": "pattern"
+				},
+				"trace_analyzer": {
+					"tokenizer": "pattern",
+					"filter": [
+						"trace_filter",
+						"lowercase"
+					]
+				}
+			}
+		}
+    },
+    "mappings" : {
+		"_default_" : {
+			"_default_" : {
+				"_all" : {"enabled" : true, "norms" : false},
+				"dynamic_templates" : [ {
+					"message_field" : {
+						"path_match" : "message",
+						"match_mapping_type" : "string",
+						"mapping" : {
+							"type" : "text",
+							"norms" : false
+						}
+					}
+				}, {
+					"string_fields" : {
+						"match" : "*",
+						"match_mapping_type" : "string",
+						"mapping" : {
+							"type" : "text", "norms" : false,
+							"fields" : {
+								"keyword" : { "type": "keyword" }
+							}
+						}
+					}
+				}, {
+					"component" : {
+						"match" : "component",
+						"mapping" : {
+							"type" : "text", "analyzer": "component_analyzer", "norms" : false,
+							"fielddata" : { "format" : "disabled" },
+							"fields" : {
+								"keyword" : { "type": "keyword", "ignore_above" : 256}
+							}
+						}
+					}
+				}, {
+					"exception" : {
+						"match" : "exception",
+						"mapping" : {
+							"type" : "text", "analyzer": "trace_analyzer", "norms": false, "ignore_above" : 2048,
+							"fielddata" : { "format" : "disabled" },
+							"fields" : {
+								"keyword" : { "type": "keyword", "ignore_above" : 2048 }
+							}
+						}
+					}
+				} ],
+				"properties" : {
+					"@timestamp": { "type": "date" },
+					"@version": { "type": "keyword", "include_in_all": false },
+					"level": { "type": "keyword" },
+					"shard_state": { "type": "keyword" },
+					"shard_type": { "type": "keyword" },
+					"index_id": { "type": "keyword" },
+					"document_id": { "type": "keyword" },
+					"node_id": { "type": "keyword" },
+					"shard_id": { "type": "integer" },
+					"bulk_action": { "type": "keyword" },
+					"bulk_request": { "type": "text", "index": false },
+					"index_request": { "type": "text", "index": false }
+				}
+			}
+		}
+	}
+}

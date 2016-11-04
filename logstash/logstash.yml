@@ -1,0 +1,2 @@
+path.data: /tmp/elasticsearch-log-processor
+path.logs: /tmp/elasticsearch-log-processor
