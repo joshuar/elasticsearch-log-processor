@@ -1,15 +1,12 @@
 [
   {
-    "_id": "Elasticsearch-Logs",
+    "_id": "Search:-Elasticsearch-Logs",
     "_type": "search",
     "_source": {
-      "title": "Elasticsearch Logs",
+      "title": "Search: Elasticsearch Logs",
       "description": "",
       "hits": 0,
       "columns": [
-        "node_name",
-        "level",
-        "component",
         "message"
       ],
       "sort": [

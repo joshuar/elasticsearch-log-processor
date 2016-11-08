@@ -9,9 +9,9 @@ Kibana.  See the following screenshot for what it looks like:
 
 ### Requirements
 
-* Elasticsearch 2.1.x or higher
-* Kibana 4.3.x or higher
-* Logstash 2.1.x or higher
+* Elasticsearch 5.x or higher
+* Kibana 5.x or higher
+* Logstash 5.x or higher
 
 ### Setup
 
@@ -21,7 +21,7 @@ Load the Elasticsearch mapping template in
 `elasticsearch/elasticsearch-template.json`:
 
 ```
-curl -XPUT <eshost>:<esport>/_template/es-logs -d @elasticsearch/elasticsearch-template.json
+curl -XPUT <eshost>:<esport>/_template/es-logs -d @elasticsearch/elasticsearch-template-5x.json
 ```
 
 Replace `<eshost>` and `<esport>` to your Elasticsearch ip/host and

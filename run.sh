@@ -26,6 +26,18 @@ manage_index_template() {
 scriptdir=$(readlink -f $0)
 scriptdir=$(dirname ${scriptdir})
 
+# Check for xargs binary, die if we can't find it
+if ! type -P xargs >/dev/null; then
+	echo "Could not find xargs!"
+	exit -1
+fi
+
+# Check for curl binary, die if we can't find it
+if ! type -P curl >/dev/null; then
+	echo "Could not find curl!"
+	exit -1
+fi
+
 # Check we have a Logstash binary we can run
 if type -P logstash >/dev/null; then
 	LOGSTASH_CMD="$(type -P logstash)"
@@ -44,19 +56,6 @@ fi
 
 LOGSTASH_OPTS="--path.config=${scriptdir}/logstash/conf.d --path.settings=${scriptdir}/logstash"
 logs_pipe="/tmp/logstash-$$"
-
-
-# Check for xargs binary, die if we can't find it
-if ! type -P xargs >/dev/null; then
-	echo "Could not find xargs!"
-	exit -1
-fi
-
-# Check for curl binary, die if we can't find it
-if ! type -P curl >/dev/null; then
-	echo "Could not find curl!"
-	exit -1
-fi
 
 while getopts ":h:u:p:t" opt; do
     case $opt in
@@ -98,9 +97,6 @@ fi
 
 # Set-up Elasticsearch template
 manage_index_template
-
-
-
 
 # Generate output plugin template
 echo -n "Creating Logstash output file..."
