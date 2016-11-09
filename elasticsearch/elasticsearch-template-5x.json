@@ -80,11 +80,15 @@
 					"level": { "type": "keyword" },
 					"shard_state": { "type": "keyword" },
 					"shard_type": { "type": "keyword" },
+					"search_type": { "type": "keyword" },
 					"index_id": { "type": "keyword" },
 					"document_id": { "type": "keyword" },
 					"node_id": { "type": "keyword" },
 					"shard_id": { "type": "integer" },
+					"total_shards": { "type": "integer" },
 					"bulk_action": { "type": "keyword" },
+					"source_query": { "type": "text" },
+					"extra_source": { "type": "text" },
 					"bulk_request": { "type": "text", "index": false },
 					"index_request": { "type": "text", "index": false }
 				}
