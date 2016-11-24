@@ -42,7 +42,7 @@ Elasticsearch.
 Usage is simple:
 
 ```sh
-./run.sh -h https://myes.com:9200 -u user -p password path/to/logs
+./run.sh -h https://myes.com:9200 -u user -p password path/to/log
 ```
 
 Where:
@@ -52,7 +52,12 @@ Where:
   Elasticsearch endpoint (optional).
 
 The remaining command-line arguments are treated as log files.
-Standard shell wildcard/globbing applies.
+Standard shell wildcard/globbing applies.  Need to process a bunch of
+logs in different directories?  Try:
+
+``` sh
+find -type f -name \*.log | xargs ~/git/elasticsearch-log-processor/run.sh -u user -p password
+```
 
 If you add a `-t` option the script will load the Elasticsearch
 template shipped in this repo into Elasticsearch for you before
