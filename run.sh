@@ -100,7 +100,7 @@ manage_index_template
 
 # Generate output plugin template
 echo -n "Creating Logstash output file..."
-ls_output_conf=${scriptdir}/logstash/90-output-elasticsearch.conf
+ls_output_conf=${scriptdir}/logstash/conf.d/90-output-elasticsearch.conf
 cat > ${ls_output_conf}<<EOF
     output {
 		elasticsearch {

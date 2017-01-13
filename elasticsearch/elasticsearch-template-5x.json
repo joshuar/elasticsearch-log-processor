@@ -56,7 +56,6 @@
 						"match" : "component",
 						"mapping" : {
 							"type" : "text", "analyzer": "component_analyzer", "norms" : false,
-							"fielddata" : { "format" : "disabled" },
 							"fields" : {
 								"keyword" : { "type": "keyword", "ignore_above" : 256}
 							}
@@ -67,7 +66,6 @@
 						"match" : "exception",
 						"mapping" : {
 							"type" : "text", "analyzer": "trace_analyzer", "norms": false, "ignore_above" : 2048,
-							"fielddata" : { "format" : "disabled" },
 							"fields" : {
 								"keyword" : { "type": "keyword", "ignore_above" : 2048 }
 							}
